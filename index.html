@@ -3,211 +3,289 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ComplainIQ — Live Simulation</title>
+<title>UnifAI — Live Simulation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy: #0D1B4B;
-  --navy-mid: #1E3A8A;
-  --teal: #0891B2;
-  --teal-light: #E0F2FE;
-  --teal-glow: rgba(8,145,178,0.15);
-  --green: #059669;
+  --navy: #0A1628;
+  --navy-mid: #162444;
+  --navy-soft: #1B3461;
+  --accent: #0EA5E9;
+  --accent-light: #E0F2FE;
+  --accent-glow: rgba(14,165,233,0.18);
+  --accent-dark: #0284C7;
+  --green: #10B981;
   --green-light: #D1FAE5;
-  --amber: #D97706;
+  --amber: #F59E0B;
   --amber-light: #FEF3C7;
-  --red: #DC2626;
+  --red: #EF4444;
   --red-light: #FEE2E2;
-  --purple: #7C3AED;
+  --purple: #8B5CF6;
   --purple-light: #EDE9FE;
-  --bg: #F8FAFC;
+  --bg: #EFF3F8;
   --surface: #FFFFFF;
-  --border: #E2E8F0;
-  --border-strong: #CBD5E1;
-  --text: #0F172A;
-  --text-muted: #64748B;
-  --text-faint: #94A3B8;
-  --mono: 'DM Mono', monospace;
-  --sans: 'DM Sans', sans-serif;
-  --display: 'Syne', sans-serif;
+  --surface-2: #F7F9FC;
+  --border: #DDE4EE;
+  --border-strong: #C4CFDF;
+  --text: #0A1628;
+  --text-muted: #566A84;
+  --text-faint: #8FA3BB;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'Plus Jakarta Sans', sans-serif;
+  --display: 'Outfit', sans-serif;
+  --r-sm: 8px;
+  --r: 12px;
+  --r-lg: 16px;
+  --shadow-sm: 0 1px 3px rgba(10,22,40,0.06),0 1px 2px rgba(10,22,40,0.04);
+  --shadow: 0 4px 14px rgba(10,22,40,0.08),0 1px 3px rgba(10,22,40,0.05);
 }
+
+/* ── SVG ICON HELPER ─────────────────── */
+.ico{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.ico svg{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
 
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 
-/* ── TOP NAV ─────────────────────────────── */
+/* ── NAV ────────────────────────────── */
 nav{
   position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);
+  background:rgba(255,255,255,0.96);backdrop-filter:blur(16px);
   border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 2rem;height:58px;
+  padding:0 2rem;height:60px;
 }
 .nav-brand{display:flex;align-items:center;gap:10px}
-.nav-logo{width:32px;height:32px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center}
-.nav-logo svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2}
-.nav-name{font-family:var(--display);font-size:18px;font-weight:800;color:var(--navy);letter-spacing:-0.5px}
-.nav-name span{color:var(--teal)}
-.nav-badge{font-size:10px;font-weight:600;padding:2px 8px;background:var(--teal-light);color:var(--teal);border-radius:20px;letter-spacing:0.5px}
+.nav-logo{
+  width:34px;height:34px;
+  background:linear-gradient(135deg,#0A1628 0%,#1B3461 100%);
+  border-radius:9px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(10,22,40,0.3);
+}
+.nav-logo svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-name{font-family:var(--display);font-size:19px;font-weight:900;color:var(--navy);letter-spacing:-0.5px}
+.nav-name span{color:var(--accent)}
+.nav-badge{
+  font-size:10px;font-weight:700;padding:3px 9px;
+  background:var(--accent-light);color:var(--accent-dark);
+  border-radius:20px;letter-spacing:0.8px;text-transform:uppercase;
+}
 .nav-right{display:flex;align-items:center;gap:12px}
-.nav-status{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
-.pulse{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(5,150,105,0.4)}50%{box-shadow:0 0 0 6px rgba(5,150,105,0)}}
+.nav-status{
+  display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
+  color:var(--text-muted);padding:5px 12px;
+  background:var(--surface-2);border:1px solid var(--border);border-radius:20px;
+}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,0.5)}50%{box-shadow:0 0 0 5px rgba(16,185,129,0)}}
 
-/* ── HERO ─────────────────────────────────── */
+/* ── HERO ────────────────────────────── */
 .hero{
-  background:linear-gradient(135deg,var(--navy) 0%,#1a3a6b 50%,#0f2d5c 100%);
-  padding:4rem 2rem 3rem;text-align:center;position:relative;overflow:hidden;
+  background:linear-gradient(140deg,#091422 0%,#0E2040 45%,#0B2952 100%);
+  padding:4.5rem 2rem 3.5rem;text-align:center;position:relative;overflow:hidden;
 }
 .hero::before{
   content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 30% 50%,rgba(8,145,178,0.2) 0%,transparent 60%),
-             radial-gradient(ellipse at 70% 50%,rgba(124,58,237,0.15) 0%,transparent 60%);
+  background:radial-gradient(ellipse at 18% 65%,rgba(14,165,233,0.2) 0%,transparent 55%),
+             radial-gradient(ellipse at 82% 35%,rgba(139,92,246,0.14) 0%,transparent 55%);
 }
 .hero-grid{
-  position:absolute;inset:0;opacity:0.04;
-  background-image:linear-gradient(rgba(255,255,255,0.5) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(255,255,255,0.5) 1px,transparent 1px);
-  background-size:40px 40px;
+  position:absolute;inset:0;opacity:0.03;
+  background-image:linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px);
+  background-size:48px 48px;
 }
-.hero-content{position:relative;max-width:800px;margin:0 auto}
-.hero-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;background:rgba(8,145,178,0.2);border:1px solid rgba(8,145,178,0.4);border-radius:20px;color:#7DD3FC;margin-bottom:1.2rem}
-.hero h1{font-family:var(--display);font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:1rem}
+.hero-content{position:relative;max-width:840px;margin:0 auto}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  padding:5px 14px;
+  background:rgba(14,165,233,0.15);border:1px solid rgba(14,165,233,0.35);
+  border-radius:20px;color:#7DD3FC;margin-bottom:1.5rem;
+}
+.hero h1{font-family:var(--display);font-size:clamp(2.4rem,5vw,3.8rem);font-weight:900;color:#fff;line-height:1.08;letter-spacing:-1.5px;margin-bottom:1rem}
 .hero h1 span{color:#38BDF8}
-.hero p{font-size:16px;color:#94A3B8;max-width:580px;margin:0 auto 2rem;line-height:1.7}
+.hero p{font-size:16px;color:#7390A8;max-width:580px;margin:0 auto 2.2rem;line-height:1.75}
 .hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .btn-primary{
-  padding:12px 28px;background:var(--teal);color:#fff;border:none;border-radius:10px;
-  font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;
-  transition:all 0.2s;letter-spacing:0.2px;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;
+  background:linear-gradient(135deg,#0EA5E9 0%,#0284C7 100%);
+  color:#fff;border:none;border-radius:var(--r);
+  font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;
+  transition:all 0.2s;box-shadow:0 4px 16px rgba(14,165,233,0.45);
 }
-.btn-primary:hover{background:#0e7490;transform:translateY(-1px);box-shadow:0 8px 24px rgba(8,145,178,0.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(14,165,233,0.55)}
+.btn-primary:active{transform:translateY(0)}
+.btn-primary svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .btn-secondary{
-  padding:12px 28px;background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.15);border-radius:10px;
-  font-family:var(--sans);font-size:14px;font-weight:500;cursor:pointer;transition:all 0.2s;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;background:rgba(255,255,255,0.07);color:#CBD5E1;
+  border:1px solid rgba(255,255,255,0.15);border-radius:var(--r);
+  font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;
 }
-.btn-secondary:hover{background:rgba(255,255,255,0.14)}
-.hero-stats{display:flex;justify-content:center;gap:3rem;margin-top:2.5rem;flex-wrap:wrap}
-.hero-stat .num{font-family:var(--display);font-size:2rem;font-weight:800;color:#38BDF8}
-.hero-stat .lbl{font-size:11px;color:#64748B;text-transform:uppercase;letter-spacing:0.8px;margin-top:2px}
+.btn-secondary:hover{background:rgba(255,255,255,0.13);border-color:rgba(255,255,255,0.28);color:#fff}
+.btn-secondary svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* ── MAIN LAYOUT ─────────────────────────── */
+.hero-stats{
+  display:flex;justify-content:center;gap:0;margin-top:3rem;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  border-radius:var(--r-lg);overflow:hidden;max-width:600px;margin-left:auto;margin-right:auto;
+}
+.hero-stat{
+  flex:1;min-width:120px;padding:1.3rem 1.5rem;
+  border-right:1px solid rgba(255,255,255,0.09);
+}
+.hero-stat:last-child{border-right:none}
+.hero-stat .num{font-family:var(--display);font-size:2.2rem;font-weight:900;color:#fff;line-height:1;letter-spacing:-1px}
+.hero-stat .lbl{font-size:11px;color:#4E6A82;text-transform:uppercase;letter-spacing:1px;margin-top:5px;font-weight:600}
+
+/* ── MAIN ────────────────────────────── */
 .main{max-width:1400px;margin:0 auto;padding:2rem}
-
-/* ── SECTION HEADER ──────────────────────── */
 .section-header{margin-bottom:1.5rem}
 .section-header h2{font-family:var(--display);font-size:1.4rem;font-weight:800;color:var(--navy);letter-spacing:-0.5px}
 .section-header p{font-size:13px;color:var(--text-muted);margin-top:4px}
 
-/* ── CONTROL PANEL ───────────────────────── */
+/* ── CONTROLS ────────────────────────── */
 .control-panel{
-  background:var(--surface);border:1px solid var(--border);border-radius:16px;
-  padding:1.5rem;margin-bottom:2rem;
-  box-shadow:0 1px 3px rgba(0,0,0,0.04);
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
+  padding:1.5rem;margin-bottom:2rem;box-shadow:var(--shadow-sm);
 }
-.control-row{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
-.control-group{display:flex;flex-direction:column;gap:4px}
-.control-group label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px}
+.control-row{display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap}
+.control-group{display:flex;flex-direction:column;gap:5px}
+.control-group label{font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.7px}
 .control-select{
-  padding:8px 12px;border:1px solid var(--border);border-radius:8px;
-  font-family:var(--sans);font-size:13px;color:var(--text);background:var(--bg);
-  cursor:pointer;outline:none;min-width:140px;
+  padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  font-family:var(--sans);font-size:13px;color:var(--text);background:var(--surface-2);
+  cursor:pointer;outline:none;min-width:160px;font-weight:500;
+  transition:border-color 0.15s,box-shadow 0.15s;
 }
-.control-select:focus{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-glow)}
-.btn-sim{
-  padding:10px 24px;background:var(--navy);color:#fff;border:none;border-radius:10px;
-  font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;
-  transition:all 0.2s;display:flex;align-items:center;gap:8px;margin-left:auto;
+.control-select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+.btn-run{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 22px;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-soft) 100%);
+  color:#fff;border:none;border-radius:var(--r);
+  font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;
+  transition:all 0.2s;margin-left:auto;
+  box-shadow:0 2px 8px rgba(10,22,40,0.3);
 }
-.btn-sim:hover{background:#1e3a8a;transform:translateY(-1px);box-shadow:0 6px 20px rgba(13,27,75,0.25)}
-.btn-sim:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-run:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(10,22,40,0.4)}
+.btn-run:active{transform:translateY(0)}
+.btn-run:disabled{opacity:0.45;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-run svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 .btn-reset{
-  padding:10px 18px;background:transparent;color:var(--text-muted);border:1px solid var(--border);border-radius:10px;
-  font-family:var(--sans);font-size:13px;cursor:pointer;transition:all 0.2s;
+  display:inline-flex;align-items:center;gap:7px;
+  padding:10px 16px;background:transparent;color:var(--text-muted);
+  border:1.5px solid var(--border);border-radius:var(--r);
+  font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;transition:all 0.2s;
 }
 .btn-reset:hover{border-color:var(--red);color:var(--red);background:var(--red-light)}
+.btn-reset svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* ── PROGRESS BAR ────────────────────────── */
-.progress-wrap{margin-top:1rem;display:none}
+/* Progress */
+.progress-wrap{margin-top:1.2rem;display:none}
 .progress-wrap.visible{display:block}
-.progress-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:6px}
-.progress-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--teal),#06B6D4);border-radius:3px;width:0%;transition:width 0.3s}
+.progress-label{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--text-muted);margin-bottom:7px}
+.progress-track{height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),#38BDF8);border-radius:3px;width:0%;transition:width 0.3s}
 
-/* ── PIPELINE VISUALIZER ─────────────────── */
+/* ── PIPELINE ─────────────────────────── */
 .pipeline-section{margin-bottom:2rem}
 .pipeline-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;
-  box-shadow:0 1px 3px rgba(0,0,0,0.04);
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:var(--shadow-sm);
 }
-.pipeline-header{padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.pipeline-header{
+  padding:1.1rem 1.5rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
 .pipeline-header h3{font-family:var(--display);font-size:1rem;font-weight:800;color:var(--navy)}
-.pipeline-steps{display:flex;align-items:center;padding:1.5rem;gap:0;overflow-x:auto;scrollbar-width:none}
+.pipeline-steps{display:flex;align-items:center;padding:1.6rem 1.5rem;gap:0;overflow-x:auto;scrollbar-width:none}
 .pipeline-steps::-webkit-scrollbar{display:none}
 .p-step{
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  min-width:90px;flex:1;position:relative;
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  min-width:86px;flex:1;position:relative;
 }
 .p-step::after{
-  content:'';position:absolute;top:18px;left:calc(50% + 24px);
-  width:calc(100% - 48px);height:2px;background:var(--border);
-  transition:background 0.4s;
+  content:'';position:absolute;top:19px;left:calc(50% + 24px);
+  width:calc(100% - 48px);height:2px;background:var(--border);transition:background 0.4s;
 }
 .p-step:last-child::after{display:none}
-.p-step.done::after{background:var(--teal)}
+.p-step.done::after{background:var(--green)}
 .step-icon{
-  width:38px;height:38px;border-radius:50%;background:var(--bg);border:2px solid var(--border);
-  display:flex;align-items:center;justify-content:center;font-size:16px;
+  width:38px;height:38px;border-radius:50%;background:var(--surface-2);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
   transition:all 0.3s;position:relative;z-index:1;
 }
-.p-step.active .step-icon{background:var(--teal);border-color:var(--teal);box-shadow:0 0 0 6px var(--teal-glow)}
+.step-icon svg{width:16px;height:16px;fill:none;stroke:var(--text-faint);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.p-step.active .step-icon{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 6px var(--accent-glow)}
+.p-step.active .step-icon svg{stroke:#fff}
 .p-step.done .step-icon{background:var(--green);border-color:var(--green)}
-.p-step.error .step-icon{background:var(--red);border-color:var(--red)}
-.step-name{font-size:10px;font-weight:600;color:var(--text-faint);text-align:center;letter-spacing:0.3px;text-transform:uppercase}
-.p-step.active .step-name{color:var(--teal)}
+.p-step.done .step-icon svg{stroke:#fff}
+.step-name{font-size:10px;font-weight:700;color:var(--text-faint);text-align:center;letter-spacing:0.3px;text-transform:uppercase}
+.p-step.active .step-name{color:var(--accent)}
 .p-step.done .step-name{color:var(--green)}
 
-/* ── STATS GRID ──────────────────────────── */
+/* ── STATS ────────────────────────────── */
 .stats-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;margin-bottom:2rem}
 @media(max-width:900px){.stats-grid{grid-template-columns:repeat(3,1fr)}}
 .stat-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:12px;
-  padding:1.1rem;text-align:center;transition:all 0.2s;
-  box-shadow:0 1px 3px rgba(0,0,0,0.03);
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:1.1rem 1.1rem 1rem;
+  display:flex;align-items:flex-start;gap:10px;
+  transition:all 0.2s;box-shadow:var(--shadow-sm);
 }
-.stat-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.07)}
-.stat-card .num{font-family:var(--display);font-size:1.9rem;font-weight:800;line-height:1;margin-bottom:4px;transition:all 0.3s}
-.stat-card .lbl{font-size:11px;color:var(--text-muted);font-weight:500;letter-spacing:0.3px}
-.stat-total .num{color:var(--navy)}
-.stat-queued .num{color:var(--teal)}
-.stat-processed .num{color:var(--green)}
-.stat-dupes .num{color:var(--red)}
-.stat-escalated .num{color:var(--amber)}
-.stat-sla .num{color:var(--purple)}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.stat-icon{
+  width:36px;height:36px;border-radius:9px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;margin-top:1px;
+}
+.stat-icon svg{width:17px;height:17px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.stat-info{flex:1;min-width:0}
+.stat-card .num{
+  font-family:var(--display);font-size:1.85rem;font-weight:900;
+  line-height:1;letter-spacing:-0.5px;transition:all 0.3s;
+  display:block;margin-bottom:3px;
+}
+.stat-card .lbl{font-size:11px;color:var(--text-muted);font-weight:600;letter-spacing:0.1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* ── MAIN GRID ───────────────────────────── */
+.stat-total .stat-icon{background:#EEF2FF}.stat-total .stat-icon svg{stroke:#4F46E5}.stat-total .num{color:#4F46E5}
+.stat-queued .stat-icon{background:var(--accent-light)}.stat-queued .stat-icon svg{stroke:var(--accent)}.stat-queued .num{color:var(--accent-dark)}
+.stat-processed .stat-icon{background:var(--green-light)}.stat-processed .stat-icon svg{stroke:var(--green)}.stat-processed .num{color:var(--green)}
+.stat-dupes .stat-icon{background:var(--red-light)}.stat-dupes .stat-icon svg{stroke:var(--red)}.stat-dupes .num{color:var(--red)}
+.stat-escalated .stat-icon{background:var(--amber-light)}.stat-escalated .stat-icon svg{stroke:var(--amber)}.stat-escalated .num{color:var(--amber)}
+.stat-sla .stat-icon{background:var(--purple-light)}.stat-sla .stat-icon svg{stroke:var(--purple)}.stat-sla .num{color:var(--purple)}
+
+/* ── MAIN GRID ───────────────────────── */
 .main-grid{display:grid;grid-template-columns:1fr 420px;gap:1.5rem}
 @media(max-width:1100px){.main-grid{grid-template-columns:1fr}}
 
-/* ── COMPLAINT INBOX ─────────────────────── */
+/* ── INBOX ────────────────────────────── */
 .inbox-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;
-  box-shadow:0 1px 3px rgba(0,0,0,0.04);
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:var(--shadow-sm);
 }
 .inbox-header{
   padding:1rem 1.5rem;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;
-  background:linear-gradient(to right,var(--navy),#1e3a8a);
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-soft) 100%);
 }
-.inbox-header h3{font-family:var(--display);font-size:1rem;font-weight:800;color:#fff}
-.inbox-filters{display:flex;gap:6px;flex-wrap:wrap;padding:0.8rem 1.5rem;border-bottom:1px solid var(--border);background:var(--bg)}
+.inbox-header h3{
+  font-family:var(--display);font-size:1rem;font-weight:800;color:#fff;
+  display:flex;align-items:center;gap:8px;
+}
+.inbox-header h3 svg{width:15px;height:15px;fill:none;stroke:rgba(255,255,255,0.65);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.inbox-filters{display:flex;gap:6px;flex-wrap:wrap;padding:0.7rem 1.5rem;border-bottom:1px solid var(--border);background:var(--surface-2)}
 .filter-btn{
-  padding:5px 12px;font-size:11px;font-weight:600;border-radius:20px;border:1px solid var(--border);
-  background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all 0.15s;letter-spacing:0.3px;
+  display:inline-flex;align-items:center;gap:5px;
+  padding:5px 11px;font-size:11px;font-weight:700;border-radius:20px;border:1.5px solid var(--border);
+  background:var(--surface);color:var(--text-muted);cursor:pointer;transition:all 0.15s;
 }
-.filter-btn:hover{border-color:var(--teal);color:var(--teal)}
+.filter-btn svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.filter-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
 .filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
 .complaint-list{max-height:620px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .complaint-item{
@@ -216,87 +294,96 @@ nav{
   animation:slideIn 0.3s ease both;
 }
 @keyframes slideIn{from{opacity:0;transform:translateX(-12px)}to{opacity:1;transform:translateX(0)}}
-.complaint-item:hover{background:#F8FAFC}
-.complaint-item.selected{background:var(--teal-light);border-left:3px solid var(--teal)}
+.complaint-item:hover{background:var(--surface-2)}
+.complaint-item.selected{background:var(--accent-light);border-left:3px solid var(--accent)}
 .ci-avatar{
-  width:36px;height:36px;border-radius:10px;flex-shrink:0;
+  width:36px;height:36px;border-radius:9px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;
 }
 .ci-body{flex:1;min-width:0}
 .ci-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
-.ci-name{font-size:13px;font-weight:600;color:var(--text)}
+.ci-name{font-size:13px;font-weight:700;color:var(--text)}
 .ci-time{font-size:10px;color:var(--text-faint)}
 .ci-issue{font-size:12px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:5px}
-.ci-tags{display:flex;gap:5px;flex-wrap:wrap}
-.tag{display:inline-block;font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px}
+.ci-tags{display:flex;gap:4px;flex-wrap:wrap}
+.tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:5px}
 .tag-sev1{background:#FEE2E2;color:#991B1B}
 .tag-sev2{background:#FEF3C7;color:#92400E}
 .tag-sev3{background:#DBEAFE;color:#1E40AF}
 .tag-sev4{background:#F1F5F9;color:#475569}
-.tag-cat{background:var(--teal-light);color:#0E7490}
+.tag-cat{background:var(--accent-light);color:var(--accent-dark)}
 .tag-ch{background:#F0FDF4;color:#166534}
 .tag-dup{background:#FEE2E2;color:#991B1B}
 .tag-esc{background:#FEF3C7;color:#92400E}
 .tag-proc{background:var(--green-light);color:#065F46}
-.ci-sla{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:600}
 
-/* ── DETAIL PANEL ────────────────────────── */
+/* ── DETAIL PANEL ───────────────────── */
 .detail-panel{display:flex;flex-direction:column;gap:1rem}
 .detail-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;
-  box-shadow:0 1px 3px rgba(0,0,0,0.04);
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:var(--shadow-sm);
 }
 .detail-card-header{
-  padding:0.9rem 1.2rem;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:8px;
+  padding:0.85rem 1.2rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:9px;
 }
-.detail-card-header .icon{font-size:15px}
+.dch-icon{
+  width:28px;height:28px;border-radius:7px;background:var(--surface-2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.dch-icon svg{width:14px;height:14px;fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .detail-card-header h4{font-size:13px;font-weight:700;color:var(--navy)}
 .detail-body{padding:1.2rem}
 .detail-empty{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:3rem 1.5rem;text-align:center;color:var(--text-faint);gap:10px;
+  padding:2.5rem 1.5rem;text-align:center;color:var(--text-faint);gap:10px;
 }
-.detail-empty .de-icon{font-size:2.5rem;opacity:0.4}
+.de-icon-wrap{
+  width:48px;height:48px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+}
+.de-icon-wrap svg{width:22px;height:22px;fill:none;stroke:var(--text-faint);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .detail-empty p{font-size:13px;max-width:200px;line-height:1.5}
 
-/* Detail sections */
 .d-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
-.d-label{font-size:11px;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.5px}
+.d-label{font-size:11px;font-weight:700;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.5px}
 .d-value{font-size:12px;color:var(--text);font-weight:500;text-align:right;max-width:60%}
 .mono-block{
-  font-family:var(--mono);font-size:11px;background:var(--bg);border:1px solid var(--border);
-  border-radius:8px;padding:10px 12px;color:var(--text-muted);line-height:1.7;white-space:pre-wrap;word-break:break-word;
+  font-family:var(--mono);font-size:11px;background:var(--surface-2);border:1px solid var(--border);
+  border-radius:var(--r-sm);padding:10px 12px;color:var(--text-muted);line-height:1.7;
+  white-space:pre-wrap;word-break:break-word;
 }
-.sentiment-bar-wrap{height:6px;background:var(--border);border-radius:3px;overflow:hidden;flex:1;margin:0 8px}
+.sentiment-bar-wrap{height:5px;background:var(--border);border-radius:3px;overflow:hidden;flex:1;margin:0 8px}
 .sentiment-fill{height:100%;border-radius:3px;transition:width 0.6s}
 .sla-countdown{
   font-family:var(--display);font-size:1.6rem;font-weight:800;text-align:center;
-  padding:0.8rem;border-radius:10px;margin-bottom:8px;
+  padding:0.85rem;border-radius:var(--r);margin-bottom:8px;
 }
 .sla-ok{background:var(--green-light);color:var(--green)}
 .sla-warn{background:var(--amber-light);color:var(--amber)}
 .sla-breach{background:var(--red-light);color:var(--red)}
-
-/* Draft box */
 .draft-box{
-  background:#F8FAFC;border:1px solid var(--border);border-radius:10px;
-  padding:12px;font-size:12px;color:var(--text);line-height:1.7;
-  border-left:3px solid var(--teal);white-space:pre-wrap;
+  background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r);
+  padding:12px;font-size:12px;color:var(--text);line-height:1.75;
+  border-left:3px solid var(--accent);white-space:pre-wrap;
 }
 .draft-actions{display:flex;gap:8px;margin-top:10px}
 .btn-approve{
-  flex:1;padding:8px;background:var(--green);color:#fff;border:none;border-radius:8px;
-  font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;
+  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:9px 12px;background:var(--green);color:#fff;border:none;border-radius:var(--r-sm);
+  font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;
+  box-shadow:0 2px 6px rgba(16,185,129,0.3);
 }
-.btn-approve:hover{background:#047857}
+.btn-approve:hover{background:#059669;transform:translateY(-1px);box-shadow:0 4px 12px rgba(16,185,129,0.4)}
+.btn-approve svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 .btn-edit{
-  flex:1;padding:8px;background:var(--surface);color:var(--text-muted);border:1px solid var(--border);border-radius:8px;
-  font-size:12px;font-weight:600;cursor:pointer;transition:all 0.2s;
+  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:9px 12px;background:var(--surface);color:var(--text-muted);
+  border:1.5px solid var(--border);border-radius:var(--r-sm);
+  font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;
 }
-.btn-edit:hover{border-color:var(--teal);color:var(--teal)}
-
-/* Similar complaints */
+.btn-edit:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.btn-edit svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .sim-item{
   display:flex;align-items:center;justify-content:space-between;
   padding:7px 0;border-bottom:1px solid var(--border);font-size:12px;
@@ -304,93 +391,90 @@ nav{
 .sim-item:last-child{border-bottom:none}
 .sim-score{
   font-family:var(--mono);font-size:10px;font-weight:600;
-  padding:2px 6px;border-radius:4px;
+  padding:2px 7px;border-radius:5px;
 }
 .sim-high{background:#FEE2E2;color:#991B1B}
 .sim-mid{background:var(--amber-light);color:#92400E}
-
-/* Escalation alert */
 .esc-alert{
-  background:var(--amber-light);border:1px solid #FDE68A;border-radius:10px;
+  background:var(--amber-light);border:1px solid #FDE68A;border-radius:var(--r-sm);
   padding:10px 12px;font-size:12px;color:#78350F;display:flex;gap:8px;align-items:flex-start;
 }
 .esc-alert.critical{background:var(--red-light);border-color:#FECACA;color:#7F1D1D}
+.esc-alert svg{width:14px;height:14px;flex-shrink:0;margin-top:1px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* ── ANALYTICS SECTION ───────────────────── */
+/* ── ANALYTICS ───────────────────────── */
 .analytics-section{margin-top:2rem}
 .analytics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 @media(max-width:1000px){.analytics-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.analytics-grid{grid-template-columns:1fr}}
 .analytics-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;
-  box-shadow:0 1px 3px rgba(0,0,0,0.04);
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;
+  box-shadow:var(--shadow-sm);
 }
-.ac-header{padding:1rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.ac-header{
+  padding:1rem 1.2rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:9px;
+}
+.ac-icon{
+  width:28px;height:28px;border-radius:7px;background:var(--surface-2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.ac-icon svg{width:14px;height:14px;fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .ac-header h4{font-size:13px;font-weight:700;color:var(--navy)}
 .ac-body{padding:1.2rem}
-
-/* Category chart */
 .cat-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .cat-name{font-size:12px;color:var(--text-muted);width:110px;flex-shrink:0}
-.cat-track{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.cat-track{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden}
 .cat-fill{height:100%;border-radius:4px;transition:width 1s ease}
-.cat-count{font-size:11px;font-weight:600;color:var(--text);width:30px;text-align:right}
-
-/* Sentiment donut placeholder */
+.cat-count{font-size:11px;font-weight:700;color:var(--text);width:28px;text-align:right}
 .donut-wrap{position:relative;width:140px;height:140px;margin:0 auto}
 canvas#donut{display:block}
-.donut-center{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  text-align:center;
-}
+.donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
 .donut-center .big{font-family:var(--display);font-size:1.4rem;font-weight:800;color:var(--navy)}
 .donut-center .sm{font-size:10px;color:var(--text-muted)}
-
-/* Trend chart */
-.trend-wrap{position:relative;height:120px}
-canvas#trendChart{display:block}
-
-/* Timeline feed */
 .feed{max-height:280px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
 .feed-item{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);animation:fadeUp 0.3s ease both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 .feed-item:last-child{border-bottom:none}
-.feed-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
-.feed-text{font-size:11.5px;color:var(--text-muted);line-height:1.5}
+.feed-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.feed-text{font-size:11.5px;color:var(--text-muted);line-height:1.5;flex:1}
 .feed-text strong{color:var(--text)}
 .feed-time{font-size:10px;color:var(--text-faint);flex-shrink:0;margin-top:2px}
-
-/* RBI Compliance table */
-.rbi-row{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px}
+.rbi-row{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px}
 .rbi-row:last-child{border-bottom:none}
-.rbi-check{color:var(--green);font-size:14px;flex-shrink:0;margin-top:1px}
+.rbi-check{
+  width:18px;height:18px;border-radius:50%;background:var(--green-light);flex-shrink:0;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;
+}
+.rbi-check svg{width:10px;height:10px;fill:none;stroke:var(--green);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .rbi-req{font-weight:600;color:var(--text);flex:1}
 .rbi-how{color:var(--text-muted);font-size:11px}
-
-/* Root cause */
 .rc-box{
-  background:var(--purple-light);border:1px solid #C4B5FD;border-radius:10px;
+  background:var(--purple-light);border:1px solid #C4B5FD;border-radius:var(--r);
   padding:12px;font-size:12px;color:#3B0764;line-height:1.6;
   border-left:3px solid var(--purple);
 }
 .rc-label{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px}
 
-/* ── FOOTER ──────────────────────────────── */
-footer{text-align:center;padding:2rem;font-size:12px;color:var(--text-faint);border-top:1px solid var(--border);margin-top:3rem}
+/* ── FOOTER ──────────────────────────── */
+footer{
+  text-align:center;padding:2rem;font-size:12px;color:var(--text-faint);
+  border-top:1px solid var(--border);margin-top:3rem;
+}
 footer strong{color:var(--text-muted)}
 
-/* ── TOAST ───────────────────────────────── */
+/* ── TOAST ───────────────────────────── */
 .toast-wrap{position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
 .toast{
-  background:var(--navy);color:#fff;padding:10px 16px;border-radius:10px;font-size:12px;font-weight:500;
+  background:var(--navy);color:#fff;padding:10px 16px;border-radius:var(--r);font-size:12px;font-weight:600;
   display:flex;align-items:center;gap:8px;
   animation:toastIn 0.3s ease both;pointer-events:auto;
-  box-shadow:0 4px 20px rgba(0,0,0,0.2);border-left:3px solid var(--teal);
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);border-left:3px solid var(--accent);
   max-width:320px;
 }
 @keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
-@keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(20px)}}
 .toast.out{animation:toastOut 0.3s ease both}
+@keyframes toastOut{from{opacity:1;transform:translateX(0)}to{opacity:0;transform:translateX(20px)}}
 .toast.success{border-left-color:var(--green)}
 .toast.warning{border-left-color:var(--amber)}
 .toast.error{border-left-color:var(--red)}
@@ -404,11 +488,14 @@ footer strong{color:var(--text-muted)}
     <div class="nav-logo">
       <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
     </div>
-    <span class="nav-name">Complain<span>IQ</span></span>
-    <span class="nav-badge">LIVE DEMO</span>
+    <span class="nav-name">Unif<span>AI</span></span>
+    <span class="nav-badge">Live Demo</span>
   </div>
   <div class="nav-right">
-    <div class="nav-status"><div class="pulse"></div> System Online</div>
+    <div class="nav-status">
+      <div class="pulse"></div>
+      System Online
+    </div>
   </div>
 </nav>
 
@@ -416,16 +503,25 @@ footer strong{color:var(--text-muted)}
 <div class="hero">
   <div class="hero-grid"></div>
   <div class="hero-content">
-    <div class="hero-tag">PSBs Hackathon 2026 · Simulation</div>
+    <div class="hero-tag">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      PSBs Hackathon 2026 · Simulation
+    </div>
     <h1>Unified Intelligent<br><span>Complaint Platform</span></h1>
     <p>Watch 50 banking complaints flow through the full AI pipeline — from multi-channel ingestion to RBI-compliant resolution in real time.</p>
     <div class="hero-actions">
-      <button class="btn-primary" onclick="document.getElementById('simulator').scrollIntoView({behavior:'smooth'})">▶ Run Simulation</button>
-      <button class="btn-secondary" onclick="document.getElementById('analytics').scrollIntoView({behavior:'smooth'})">View Analytics</button>
+      <button class="btn-primary" onclick="document.getElementById('simulator').scrollIntoView({behavior:'smooth'})">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Run Simulation
+      </button>
+      <button class="btn-secondary" onclick="document.getElementById('analytics').scrollIntoView({behavior:'smooth'})">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        View Analytics
+      </button>
     </div>
     <div class="hero-stats">
       <div class="hero-stat"><div class="num">50</div><div class="lbl">Complaints</div></div>
-      <div class="hero-stat"><div class="num">7</div><div class="lbl">Pipeline Steps</div></div>
+      <div class="hero-stat"><div class="num">10</div><div class="lbl">Pipeline Steps</div></div>
       <div class="hero-stat"><div class="num">30d</div><div class="lbl">RBI SLA</div></div>
       <div class="hero-stat"><div class="num">&lt;2s</div><div class="lbl">AI Processing</div></div>
     </div>
@@ -441,9 +537,9 @@ footer strong{color:var(--text-muted)}
       <div class="control-group">
         <label>Simulation Speed</label>
         <select class="control-select" id="speedSelect">
-          <option value="120">Fast (120ms/complaint)</option>
-          <option value="300" selected>Normal (300ms/complaint)</option>
-          <option value="600">Slow (600ms/complaint)</option>
+          <option value="120">Fast (120ms)</option>
+          <option value="300" selected>Normal (300ms)</option>
+          <option value="600">Slow (600ms)</option>
         </select>
       </div>
       <div class="control-group">
@@ -467,9 +563,13 @@ footer strong{color:var(--text-muted)}
           <option value="4">Low (Sev 4)</option>
         </select>
       </div>
-      <button class="btn-reset" onclick="resetSim()">↺ Reset</button>
-      <button class="btn-sim" id="simBtn" onclick="startSim()">
-        <span>▶</span> Run 50 Complaints
+      <button class="btn-reset" onclick="resetSim()">
+        <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+        Reset
+      </button>
+      <button class="btn-run" id="simBtn" onclick="startSim()">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Run 50 Complaints
       </button>
     </div>
     <div class="progress-wrap" id="progressWrap">
@@ -481,27 +581,43 @@ footer strong{color:var(--text-muted)}
     </div>
   </div>
 
-  <!-- PIPELINE VISUALIZER -->
+  <!-- PIPELINE -->
   <div class="pipeline-section">
     <div class="pipeline-card">
       <div class="pipeline-header">
         <h3>AI Processing Pipeline</h3>
         <span style="font-size:12px;color:var(--text-muted)" id="pipelineStatus">Idle — click Run to start</span>
       </div>
-      <div class="pipeline-steps" id="pipelineSteps">
-        <!-- injected by JS -->
-      </div>
+      <div class="pipeline-steps" id="pipelineSteps"></div>
     </div>
   </div>
 
   <!-- STATS -->
   <div class="stats-grid">
-    <div class="stat-card stat-total"><div class="num" id="s-received">0</div><div class="lbl">Received</div></div>
-    <div class="stat-card stat-queued"><div class="num" id="s-queued">0</div><div class="lbl">In Queue</div></div>
-    <div class="stat-card stat-processed"><div class="num" id="s-processed">0</div><div class="lbl">AI Processed</div></div>
-    <div class="stat-card stat-dupes"><div class="num" id="s-dupes">0</div><div class="lbl">Duplicates</div></div>
-    <div class="stat-card stat-escalated"><div class="num" id="s-escalated">0</div><div class="lbl">Escalated</div></div>
-    <div class="stat-card stat-sla"><div class="num" id="s-sla">0</div><div class="lbl">SLA Critical</div></div>
+    <div class="stat-card stat-total">
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <div class="stat-info"><span class="num" id="s-received">0</span><div class="lbl">Received</div></div>
+    </div>
+    <div class="stat-card stat-queued">
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+      <div class="stat-info"><span class="num" id="s-queued">0</span><div class="lbl">In Queue</div></div>
+    </div>
+    <div class="stat-card stat-processed">
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="stat-info"><span class="num" id="s-processed">0</span><div class="lbl">Processed</div></div>
+    </div>
+    <div class="stat-card stat-dupes">
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div>
+      <div class="stat-info"><span class="num" id="s-dupes">0</span><div class="lbl">Duplicates</div></div>
+    </div>
+    <div class="stat-card stat-escalated">
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg></div>
+      <div class="stat-info"><span class="num" id="s-escalated">0</span><div class="lbl">Escalated</div></div>
+    </div>
+    <div class="stat-card stat-sla">
+      <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+      <div class="stat-info"><span class="num" id="s-sla">0</span><div class="lbl">SLA Critical</div></div>
+    </div>
   </div>
 
   <!-- MAIN GRID -->
@@ -511,16 +627,34 @@ footer strong{color:var(--text-muted)}
     <div>
       <div class="inbox-card">
         <div class="inbox-header">
-          <h3>📥 Unified Complaint Inbox</h3>
-          <span style="font-size:12px;color:rgba(255,255,255,0.6)" id="inboxCount">0 complaints</span>
+          <h3>
+            <svg viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+            Unified Complaint Inbox
+          </h3>
+          <span style="font-size:12px;color:rgba(255,255,255,0.55)" id="inboxCount">0 complaints</span>
         </div>
         <div class="inbox-filters">
           <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
-          <button class="filter-btn" onclick="setFilter('sev1',this)">🔴 Critical</button>
-          <button class="filter-btn" onclick="setFilter('sev2',this)">🟡 High</button>
-          <button class="filter-btn" onclick="setFilter('duplicate',this)">🔗 Duplicates</button>
-          <button class="filter-btn" onclick="setFilter('escalated',this)">⚡ Escalated</button>
-          <button class="filter-btn" onclick="setFilter('open',this)">⏳ Open</button>
+          <button class="filter-btn" onclick="setFilter('sev1',this)">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Critical
+          </button>
+          <button class="filter-btn" onclick="setFilter('sev2',this)">
+            <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            High
+          </button>
+          <button class="filter-btn" onclick="setFilter('duplicate',this)">
+            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Duplicates
+          </button>
+          <button class="filter-btn" onclick="setFilter('escalated',this)">
+            <svg viewBox="0 0 24 24"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg>
+            Escalated
+          </button>
+          <button class="filter-btn" onclick="setFilter('open',this)">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Open
+          </button>
         </div>
         <div class="complaint-list" id="complaintList"></div>
       </div>
@@ -530,14 +664,14 @@ footer strong{color:var(--text-muted)}
     <div class="detail-panel">
 
       <!-- 360 View -->
-      <div class="detail-card" id="detailCard360">
+      <div class="detail-card">
         <div class="detail-card-header">
-          <span class="icon">🔍</span>
+          <div class="dch-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
           <h4>360° Complaint View</h4>
         </div>
         <div class="detail-body" id="detail360">
           <div class="detail-empty">
-            <div class="de-icon">📋</div>
+            <div class="de-icon-wrap"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
             <p>Select a complaint from the inbox to see full details</p>
           </div>
         </div>
@@ -546,33 +680,42 @@ footer strong{color:var(--text-muted)}
       <!-- SLA Timer -->
       <div class="detail-card">
         <div class="detail-card-header">
-          <span class="icon">⏱</span>
+          <div class="dch-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
           <h4>SLA Countdown</h4>
         </div>
         <div class="detail-body" id="slaDetail">
-          <div class="detail-empty"><div class="de-icon">⏱</div><p>Select a complaint</p></div>
+          <div class="detail-empty">
+            <div class="de-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+            <p>Select a complaint</p>
+          </div>
         </div>
       </div>
 
       <!-- AI Draft -->
       <div class="detail-card">
         <div class="detail-card-header">
-          <span class="icon">✍️</span>
+          <div class="dch-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
           <h4>AI Draft Response</h4>
         </div>
         <div class="detail-body" id="draftDetail">
-          <div class="detail-empty"><div class="de-icon">🤖</div><p>Select a complaint to view AI-generated draft</p></div>
+          <div class="detail-empty">
+            <div class="de-icon-wrap"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+            <p>Select a complaint to view AI-generated draft</p>
+          </div>
         </div>
       </div>
 
-      <!-- Similar / Duplicates -->
+      <!-- Semantic Similarity -->
       <div class="detail-card">
         <div class="detail-card-header">
-          <span class="icon">🔗</span>
+          <div class="dch-icon"><svg viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></div>
           <h4>Semantic Similarity</h4>
         </div>
         <div class="detail-body" id="similarDetail">
-          <div class="detail-empty"><div class="de-icon">🔗</div><p>Select a complaint</p></div>
+          <div class="detail-empty">
+            <div class="de-icon-wrap"><svg viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></div>
+            <p>Select a complaint</p>
+          </div>
         </div>
       </div>
 
@@ -582,20 +725,24 @@ footer strong{color:var(--text-muted)}
   <!-- ANALYTICS -->
   <div class="analytics-section" id="analytics">
     <div class="section-header" style="margin-top:1rem">
-      <h2>Analytics & Insights</h2>
+      <h2>Analytics &amp; Insights</h2>
       <p>Real-time trend analysis, root cause identification, and RBI compliance tracking</p>
     </div>
     <div class="analytics-grid">
 
-      <!-- Category Distribution -->
       <div class="analytics-card">
-        <div class="ac-header"><span>📊</span><h4>Category Distribution</h4></div>
+        <div class="ac-header">
+          <div class="ac-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <h4>Category Distribution</h4>
+        </div>
         <div class="ac-body" id="categoryChart"></div>
       </div>
 
-      <!-- Sentiment -->
       <div class="analytics-card">
-        <div class="ac-header"><span>💬</span><h4>Sentiment Analysis</h4></div>
+        <div class="ac-header">
+          <div class="ac-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h4>Sentiment Analysis</h4>
+        </div>
         <div class="ac-body">
           <div class="donut-wrap">
             <canvas id="donut" width="140" height="140"></canvas>
@@ -605,33 +752,47 @@ footer strong{color:var(--text-muted)}
         </div>
       </div>
 
-      <!-- Channel Breakdown -->
       <div class="analytics-card">
-        <div class="ac-header"><span>📡</span><h4>Channel Breakdown</h4></div>
+        <div class="ac-header">
+          <div class="ac-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.49 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.56a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <h4>Channel Breakdown</h4>
+        </div>
         <div class="ac-body">
           <canvas id="channelChart" width="300" height="180"></canvas>
         </div>
       </div>
 
-      <!-- Root Cause -->
       <div class="analytics-card">
-        <div class="ac-header"><span>🧠</span><h4>AI Root Cause Analysis</h4></div>
+        <div class="ac-header">
+          <div class="ac-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+          <h4>AI Root Cause Analysis</h4>
+        </div>
         <div class="ac-body" id="rootCausePanel">
-          <div class="detail-empty"><div class="de-icon">🧠</div><p>Runs after processing completes</p></div>
+          <div class="detail-empty">
+            <div class="de-icon-wrap"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
+            <p>Runs after processing completes</p>
+          </div>
         </div>
       </div>
 
-      <!-- RBI Compliance -->
       <div class="analytics-card">
-        <div class="ac-header"><span>⚖️</span><h4>RBI Compliance Tracker</h4></div>
+        <div class="ac-header">
+          <div class="ac-icon"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <h4>RBI Compliance Tracker</h4>
+        </div>
         <div class="ac-body" id="rbiPanel">
-          <div class="detail-empty"><div class="de-icon">⚖️</div><p>Compliance data appears after simulation</p></div>
+          <div class="detail-empty">
+            <div class="de-icon-wrap"><svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+            <p>Compliance data appears after simulation</p>
+          </div>
         </div>
       </div>
 
-      <!-- Live Activity Feed -->
       <div class="analytics-card">
-        <div class="ac-header"><span>📡</span><h4>Live Activity Feed</h4></div>
+        <div class="ac-header">
+          <div class="ac-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <h4>Live Activity Feed</h4>
+        </div>
         <div class="ac-body">
           <div class="feed" id="activityFeed">
             <div style="text-align:center;padding:2rem;color:var(--text-faint);font-size:12px">Activity will appear here during simulation</div>
@@ -645,14 +806,28 @@ footer strong{color:var(--text-muted)}
 </div>
 
 <footer>
-  <strong>ComplainIQ</strong> — PSBs Hackathon Series 2026 &nbsp;·&nbsp; Unified Intelligent Complaint Platform for Financial Institutions<br>
+  <strong>UnifAI</strong> — PSBs Hackathon Series 2026 &nbsp;·&nbsp; Unified Intelligent Complaint Platform for Financial Institutions<br>
   <span style="margin-top:4px;display:block">Demo simulation — all data is synthetic</span>
 </footer>
 
 <div class="toast-wrap" id="toastWrap"></div>
 
 <script>
-// ─── DATA ─────────────────────────────────────────────────────────────────────
+// ─── SVG ICONS FOR PIPELINE ─────────────────────────────────────────────────
+const PIPELINE_ICONS = {
+  gateway: '<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+  queue:   '<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+  normalize:'<svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+  classify: '<svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
+  sentiment:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
+  embedding:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M6.3 6.3a7 7 0 0 0 0 11.4M17.7 6.3a7 7 0 0 1 0 11.4"/></svg>',
+  duplicate:'<svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+  draft:    '<svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',
+  sla:      '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+  store:    '<svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+};
+
+// ─── DATA ───────────────────────────────────────────────────────────────────
 const CHANNELS = ['Email','WhatsApp','Web Form','Twitter/X','Call Center'];
 const CATEGORIES = ['Billing','Account Access','Loan','UPI/Payments','Card Services','Account Services','Fraud','Fixed Deposit'];
 const CUSTOMERS = [
@@ -677,43 +852,41 @@ const ISSUES_BY_CAT = {
   'Fraud':['Unauthorized transaction of ₹25,000 detected','SIM swap fraud reported — account compromised','Phishing call resulted in ₹15,000 debit','Unknown third party linked to my account','Suspicious login attempt from unknown device'],
   'Fixed Deposit':['FD maturity amount not credited on due date','Premature FD closure not processed','Interest rate applied incorrectly on renewal','TDS deducted incorrectly on FD interest','FD receipt not issued after creation'],
 };
-const CHANNEL_COLORS=['#0891B2','#059669','#7C3AED','#D97706','#DC2626'];
-const AVATARS_BG=['#0891B2','#7C3AED','#059669','#D97706','#DC2626','#0D9488','#4F46E5','#B45309'];
+const CHANNEL_COLORS=['#0EA5E9','#10B981','#8B5CF6','#F59E0B','#EF4444'];
+const AVATARS_BG=['#0EA5E9','#8B5CF6','#10B981','#F59E0B','#EF4444','#0D9488','#4F46E5','#B45309'];
 
 const PIPELINE_STEPS=[
-  {id:'gateway',label:'API Gateway',icon:'🔒'},
-  {id:'queue',label:'Queue',icon:'⚡'},
-  {id:'normalize',label:'Normalize',icon:'🔧'},
-  {id:'classify',label:'Classify',icon:'🏷️'},
-  {id:'sentiment',label:'Sentiment',icon:'💬'},
-  {id:'embedding',label:'Embed',icon:'🧮'},
-  {id:'duplicate',label:'Dedup',icon:'🔗'},
-  {id:'draft',label:'Draft',icon:'✍️'},
-  {id:'sla',label:'SLA',icon:'⏱'},
-  {id:'store',label:'Store',icon:'🗄️'},
+  {id:'gateway',label:'API Gateway'},
+  {id:'queue',label:'Queue'},
+  {id:'normalize',label:'Normalize'},
+  {id:'classify',label:'Classify'},
+  {id:'sentiment',label:'Sentiment'},
+  {id:'embedding',label:'Embed'},
+  {id:'duplicate',label:'Dedup'},
+  {id:'draft',label:'Draft'},
+  {id:'sla',label:'SLA'},
+  {id:'store',label:'Store'},
 ];
 
 const DRAFT_TEMPLATES = {
-  'Billing': `Dear [CUSTOMER_NAME],\n\nThank you for bringing this to our attention. We sincerely apologize for the billing discrepancy on your account.\n\nWe have raised a priority investigation (Ref: INV-[PENDING]). Our team will review the transaction and initiate a reversal within [PENDING] working hours if a duplicate charge is confirmed.\n\nYou will receive an SMS confirmation once resolved.\n\nRegards,\nComplainIQ Bank Support`,
-  'Account Access': `Dear [CUSTOMER_NAME],\n\nWe apologize for the inconvenience caused with accessing your account.\n\nOur technical team has been notified and is working to resolve this issue. A senior agent will contact you within 2 hours with an update.\n\nFor urgent assistance, please visit your nearest branch with your ID proof.\n\nRegards,\nComplainIQ Bank Support`,
-  'Loan': `Dear [CUSTOMER_NAME],\n\nThank you for reaching out about your loan concern.\n\nWe have escalated your case to our Loans Processing Team (Ref: LN-[PENDING]). A dedicated loan officer will contact you within 24 hours with a status update and timeline.\n\nWe sincerely apologize for the delay.\n\nRegards,\nComplainIQ Bank Loans`,
-  'UPI/Payments': `Dear [CUSTOMER_NAME],\n\nWe understand how distressing a failed UPI transaction can be.\n\nWe have initiated an urgent trace on your transaction reference [PENDING]. As per NPCI guidelines, if the amount is not credited within 24 hours, a full automatic reversal will be initiated.\n\nRegards,\nComplainIQ Digital Payments`,
-  'Fraud': `Dear [CUSTOMER_NAME],\n\nWe take fraud reports with the utmost seriousness. Your account has been flagged for immediate security review.\n\nAs a precaution, we are temporarily restricting certain transactions. A senior fraud analyst will contact you within 1 hour to verify and restore your account.\n\nRef: FRD-[PENDING]\n\nRegards,\nComplainIQ Security Team`,
+  'Billing': `Dear [CUSTOMER_NAME],\n\nThank you for bringing this to our attention. We sincerely apologize for the billing discrepancy on your account.\n\nWe have raised a priority investigation (Ref: INV-[PENDING]). Our team will review the transaction and initiate a reversal within [PENDING] working hours if a duplicate charge is confirmed.\n\nYou will receive an SMS confirmation once resolved.\n\nRegards,\nUnifAI Bank Support`,
+  'Account Access': `Dear [CUSTOMER_NAME],\n\nWe apologize for the inconvenience caused with accessing your account.\n\nOur technical team has been notified and is working to resolve this issue. A senior agent will contact you within 2 hours with an update.\n\nFor urgent assistance, please visit your nearest branch with your ID proof.\n\nRegards,\nUnifAI Bank Support`,
+  'Loan': `Dear [CUSTOMER_NAME],\n\nThank you for reaching out about your loan concern.\n\nWe have escalated your case to our Loans Processing Team (Ref: LN-[PENDING]). A dedicated loan officer will contact you within 24 hours with a status update and timeline.\n\nWe sincerely apologize for the delay.\n\nRegards,\nUnifAI Bank Loans`,
+  'UPI/Payments': `Dear [CUSTOMER_NAME],\n\nWe understand how distressing a failed UPI transaction can be.\n\nWe have initiated an urgent trace on your transaction reference [PENDING]. As per NPCI guidelines, if the amount is not credited within 24 hours, a full automatic reversal will be initiated.\n\nRegards,\nUnifAI Digital Payments`,
+  'Fraud': `Dear [CUSTOMER_NAME],\n\nWe take fraud reports with the utmost seriousness. Your account has been flagged for immediate security review.\n\nAs a precaution, we are temporarily restricting certain transactions. A senior fraud analyst will contact you within 1 hour to verify and restore your account.\n\nRef: FRD-[PENDING]\n\nRegards,\nUnifAI Security Team`,
 };
-const DEFAULT_DRAFT = `Dear [CUSTOMER_NAME],\n\nThank you for contacting us regarding your complaint.\n\nWe have registered your concern (Ref: [PENDING]) and assigned it to our support team. We will provide a resolution within the stipulated timeline.\n\nRegards,\nComplainIQ Bank Support`;
+const DEFAULT_DRAFT = `Dear [CUSTOMER_NAME],\n\nThank you for contacting us regarding your complaint.\n\nWe have registered your concern (Ref: [PENDING]) and assigned it to our support team. We will provide a resolution within the stipulated timeline.\n\nRegards,\nUnifAI Bank Support`;
 
-// ─── STATE ────────────────────────────────────────────────────────────────────
+// ─── STATE ──────────────────────────────────────────────────────────────────
 let complaints = [];
 let processedComplaints = [];
 let selectedId = null;
 let simRunning = false;
 let currentFilter = 'all';
-let feedTimer = null;
-let slaInterval = null;
 let donutCtx = null;
 let channelCtx = null;
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
+// ─── INIT ────────────────────────────────────────────────────────────────────
 function init() {
   renderPipeline();
   renderCategoryChart([]);
@@ -725,19 +898,18 @@ function renderPipeline() {
   const el = document.getElementById('pipelineSteps');
   el.innerHTML = PIPELINE_STEPS.map(s => `
     <div class="p-step" id="pstep-${s.id}">
-      <div class="step-icon">${s.icon}</div>
+      <div class="step-icon">${PIPELINE_ICONS[s.id] || ''}</div>
       <div class="step-name">${s.label}</div>
     </div>
   `).join('');
 }
 
-// ─── COMPLAINT GENERATION ─────────────────────────────────────────────────────
+// ─── COMPLAINT GENERATION ────────────────────────────────────────────────────
 function generateComplaints() {
   const arr = [];
-  // Ensure variety
-  const clusterCat = 'UPI/Payments'; // forced cluster
+  const clusterCat = 'UPI/Payments';
   for (let i = 0; i < 50; i++) {
-    const isCluster = i >= 5 && i <= 13; // 9 UPI cluster complaints
+    const isCluster = i >= 5 && i <= 13;
     const cat = isCluster ? clusterCat : CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
     const channel = CHANNELS[Math.floor(Math.random() * CHANNELS.length)];
     const sev = isCluster ? 1 : Math.floor(Math.random() * 4) + 1;
@@ -759,25 +931,17 @@ function generateComplaints() {
     ] : [
       { id: 'C-' + String(Math.floor(Math.random()*49)+1).padStart(3,'0'), score: 0.55 + Math.random()*0.25, issue: (ISSUES_BY_CAT[CATEGORIES[Math.floor(Math.random()*CATEGORIES.length)]][0]) }
     ];
-
     arr.push({
       id: 'C-' + String(i+1).padStart(3,'0'),
-      customer,
-      account: accountNum,
-      channel,
-      category: cat,
-      severity: sev,
+      customer, account: accountNum, channel, category: cat, severity: sev,
       sentiment: parseFloat(sentiment.toFixed(2)),
       sentimentLabel: sentiment < -0.7 ? 'Angry' : sentiment < -0.4 ? 'Frustrated' : sentiment < -0.1 ? 'Dissatisfied' : 'Neutral',
-      issue: issues[issueIdx],
-      slaHours: hours,
+      issue: issues[issueIdx], slaHours: hours,
       isDuplicate: isDupe,
       isEscalated: sev === 1 || legalMention || repeatCustomer,
-      escalateReason: escReason,
-      similar: similarPairs,
+      escalateReason: escReason, similar: similarPairs,
       draft: (DRAFT_TEMPLATES[cat] || DEFAULT_DRAFT).replace('[CUSTOMER_NAME]', customer.split(' ')[0]),
-      status: 'pending',
-      pii: ['[CUSTOMER_NAME]','[ACCOUNT_NUMBER]','[PHONE]'],
+      status: 'pending', pii: ['[CUSTOMER_NAME]','[ACCOUNT_NUMBER]','[PHONE]'],
       processed: false,
       receivedAt: new Date(Date.now() - Math.random()*3600000),
       clusterId: isCluster ? 'CLU-UPI-001' : null,
@@ -787,12 +951,13 @@ function generateComplaints() {
   return arr;
 }
 
-// ─── SIMULATION ───────────────────────────────────────────────────────────────
+// ─── SIMULATION ──────────────────────────────────────────────────────────────
 async function startSim() {
   if (simRunning) return;
   simRunning = true;
-  document.getElementById('simBtn').disabled = true;
-  document.getElementById('simBtn').innerHTML = '<span>⏳</span> Simulating...';
+  const btn = document.getElementById('simBtn');
+  btn.disabled = true;
+  btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Simulating...`;
   document.getElementById('progressWrap').classList.add('visible');
   document.getElementById('pipelineStatus').textContent = 'Processing...';
 
@@ -802,63 +967,43 @@ async function startSim() {
   const speed = parseInt(document.getElementById('speedSelect').value);
   let received = 0, queued = 0, processed = 0, dupes = 0, escalated = 0, sla1 = 0;
 
-  // Animate arrival counter fast first
   for (let i = 0; i < complaints.length; i++) {
-    received++;
-    queued++;
+    received++; queued++;
     setStats(received, queued, processed, dupes, escalated, sla1);
     if (i % 5 === 0) await sleep(20);
   }
 
   clearActivityFeed();
 
-  // Process one by one
   for (let i = 0; i < complaints.length; i++) {
     const c = complaints[i];
     queued = Math.max(0, queued - 1);
-
-    // Animate pipeline steps
     await animatePipeline(speed);
-
-    c.processed = true;
-    c.status = 'open';
+    c.processed = true; c.status = 'open';
     processedComplaints.push(c);
-
     processed++;
     if (c.isDuplicate) dupes++;
     if (c.isEscalated) escalated++;
     if (c.severity === 1) sla1++;
-
     setStats(received, queued, processed, dupes, escalated, sla1);
     updateProgress(processed, 50);
     renderComplaintItem(c, i * speed < 1200);
     addFeedItem(c);
-
     document.getElementById('inboxCount').textContent = processedComplaints.length + ' complaints';
-
-    if (i % 8 === 0) {
-      updateCategoryChart();
-      updateDonut();
-      updateChannelChart();
-    }
-
+    if (i % 8 === 0) { updateCategoryChart(); updateDonut(); updateChannelChart(); }
     await sleep(speed);
   }
 
-  // Final updates
-  document.getElementById('pipelineStatus').textContent = '50/50 complaints processed ✓';
-  document.getElementById('simBtn').innerHTML = '<span>✓</span> Completed';
-  document.getElementById('simBtn').style.background = 'var(--green)';
+  document.getElementById('pipelineStatus').textContent = '50/50 complaints processed';
+  btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Completed`;
+  btn.style.background = 'linear-gradient(135deg,var(--green),#059669)';
 
-  updateCategoryChart();
-  updateDonut();
-  updateChannelChart();
-  renderRBIPanel();
-  renderRootCause();
+  updateCategoryChart(); updateDonut(); updateChannelChart();
+  renderRBIPanel(); renderRootCause();
 
-  toast('✓ All 50 complaints processed successfully', 'success');
-  toast('⚡ 9 UPI cluster complaints grouped', 'warning');
-  toast('⚖️ Regulatory report auto-generated', '');
+  toast('All 50 complaints processed successfully', 'success');
+  toast('9 UPI cluster complaints grouped', 'warning');
+  toast('Regulatory report auto-generated', '');
 
   simRunning = false;
 }
@@ -866,36 +1011,21 @@ async function startSim() {
 async function animatePipeline(speed) {
   const delay = Math.max(15, speed / PIPELINE_STEPS.length);
   for (let s = 0; s < PIPELINE_STEPS.length; s++) {
-    // Clear previous active
     document.querySelectorAll('.p-step').forEach(el => el.classList.remove('active'));
-    // Mark done up to s-1
     for (let j = 0; j < s; j++) {
       document.getElementById('pstep-' + PIPELINE_STEPS[j].id)?.classList.add('done');
     }
-    // Mark current active
     document.getElementById('pstep-' + PIPELINE_STEPS[s].id)?.classList.add('active');
     await sleep(delay);
   }
-  // All done
-  document.querySelectorAll('.p-step').forEach(el => {
-    el.classList.remove('active');
-    el.classList.add('done');
-  });
+  document.querySelectorAll('.p-step').forEach(el => { el.classList.remove('active'); el.classList.add('done'); });
 }
 
 function setStats(r, q, p, d, e, s) {
-  animNum('s-received', r);
-  animNum('s-queued', q);
-  animNum('s-processed', p);
-  animNum('s-dupes', d);
-  animNum('s-escalated', e);
-  animNum('s-sla', s);
+  animNum('s-received', r); animNum('s-queued', q); animNum('s-processed', p);
+  animNum('s-dupes', d); animNum('s-escalated', e); animNum('s-sla', s);
 }
-
-function animNum(id, val) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = val;
-}
+function animNum(id, val) { const el = document.getElementById(id); if (el) el.textContent = val; }
 
 function updateProgress(done, total) {
   const pct = Math.round(done / total * 100);
@@ -904,7 +1034,7 @@ function updateProgress(done, total) {
   document.getElementById('progressText').textContent = `Processing complaint ${done} of ${total}...`;
 }
 
-// ─── COMPLAINT LIST RENDER ────────────────────────────────────────────────────
+// ─── COMPLAINT LIST ──────────────────────────────────────────────────────────
 function renderComplaintItem(c, fast) {
   const list = document.getElementById('complaintList');
   const div = document.createElement('div');
@@ -912,14 +1042,11 @@ function renderComplaintItem(c, fast) {
   div.id = 'ci-' + c.id;
   div.style.animationDelay = fast ? '0ms' : '100ms';
   div.onclick = () => selectComplaint(c.id);
-
   const initials = c.customer.split(' ').map(w=>w[0]).join('').slice(0,2);
   const sevTag = `<span class="tag tag-sev${c.severity}">Sev ${c.severity}</span>`;
   const dupTag = c.isDuplicate ? `<span class="tag tag-dup">Duplicate</span>` : '';
   const escTag = c.isEscalated ? `<span class="tag tag-esc">Escalated</span>` : '';
-  const procTag = `<span class="tag tag-proc">✓ Processed</span>`;
-  const slaColor = c.severity === 1 ? 'var(--red)' : c.severity === 2 ? 'var(--amber)' : 'var(--green)';
-
+  const procTag = `<span class="tag tag-proc">Processed</span>`;
   div.innerHTML = `
     <div class="ci-avatar" style="background:${c.avatarBg}">${initials}</div>
     <div class="ci-body">
@@ -965,34 +1092,28 @@ function filterComplaints() {
     if (!el) return;
     const chOk = chFilter === 'all' || c.channel === chFilter;
     const sOk = sevFilter === 'all' || String(c.severity) === sevFilter;
-    const fOk = matchesFilter(c);
-    el.style.display = (chOk && sOk && fOk) ? 'flex' : 'none';
+    el.style.display = (chOk && sOk && matchesFilter(c)) ? 'flex' : 'none';
   });
 }
 
-// ─── COMPLAINT DETAIL ─────────────────────────────────────────────────────────
+// ─── COMPLAINT DETAIL ────────────────────────────────────────────────────────
 function selectComplaint(id) {
   selectedId = id;
   document.querySelectorAll('.complaint-item').forEach(el => el.classList.remove('selected'));
   const el = document.getElementById('ci-' + id);
   if (el) el.classList.add('selected');
-
   const c = processedComplaints.find(x => x.id === id);
   if (!c) return;
-  render360(c);
-  renderSLA(c);
-  renderDraft(c);
-  renderSimilar(c);
+  render360(c); renderSLA(c); renderDraft(c); renderSimilar(c);
 }
 
 function render360(c) {
   const sev = ['','Critical','High','Medium','Low','Minimal'][c.severity];
-  const sevColor = ['','var(--red)','var(--amber)','var(--navy-mid)','var(--text-muted)','var(--text-faint)'][c.severity];
+  const sevColor = ['','var(--red)','var(--amber)','var(--accent-dark)','var(--text-muted)','var(--text-faint)'][c.severity];
   const sentColor = c.sentiment < -0.6 ? 'var(--red)' : c.sentiment < -0.3 ? 'var(--amber)' : 'var(--green)';
   const sentPct = Math.round((1 + c.sentiment) * 50);
-
   document.getElementById('detail360').innerHTML = `
-    <div class="d-row"><span class="d-label">Complaint ID</span><span class="d-value" style="font-family:var(--mono);color:var(--teal)">${c.id}</span></div>
+    <div class="d-row"><span class="d-label">Complaint ID</span><span class="d-value" style="font-family:var(--mono);color:var(--accent)">${c.id}</span></div>
     <div class="d-row"><span class="d-label">Customer</span><span class="d-value">${c.customer}</span></div>
     <div class="d-row"><span class="d-label">Account</span><span class="d-value" style="font-family:var(--mono)">${c.account}</span></div>
     <div class="d-row"><span class="d-label">Channel</span><span class="d-value">${c.channel}</span></div>
@@ -1000,17 +1121,17 @@ function render360(c) {
     <div class="d-row"><span class="d-label">Severity</span><span class="d-value" style="color:${sevColor};font-weight:700">${sev} (${c.severity}/5)</span></div>
     <div class="d-row"><span class="d-label">Status</span><span class="d-value"><span class="tag tag-proc">Open</span></span></div>
     ${c.isDuplicate ? `<div class="d-row"><span class="d-label">Cluster</span><span class="d-value" style="color:var(--red)">${c.clusterId}</span></div>` : ''}
-    <div style="margin:10px 0 6px"><span class="d-label">Core Issue Extracted</span></div>
+    <div style="margin:10px 0 6px"><span class="d-label">Core Issue</span></div>
     <div class="mono-block">${c.issue}</div>
     <div style="margin:10px 0 6px"><span class="d-label">Sentiment</span></div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-      <span style="font-size:11px;color:${sentColor};font-weight:600">${c.sentimentLabel}</span>
+      <span style="font-size:11px;color:${sentColor};font-weight:700">${c.sentimentLabel}</span>
       <div class="sentiment-bar-wrap"><div class="sentiment-fill" style="width:${sentPct}%;background:${sentColor}"></div></div>
       <span style="font-family:var(--mono);font-size:11px;color:var(--text-muted)">${c.sentiment}</span>
     </div>
     <div style="margin:10px 0 6px"><span class="d-label">PII Masked</span></div>
     <div class="mono-block">${c.pii.join(', ')} → [TOKENS]</div>
-    ${c.isEscalated ? `<div style="margin-top:10px"><div class="${c.severity===1?'esc-alert critical':'esc-alert'}">⚡ <strong>Escalated:</strong> ${c.escalateReason}</div></div>` : ''}
+    ${c.isEscalated ? `<div style="margin-top:10px"><div class="${c.severity===1?'esc-alert critical':'esc-alert'}"><svg viewBox="0 0 24 24"><polyline points="17 11 12 6 7 11"/><polyline points="17 18 12 13 7 18"/></svg><div><strong>Escalated:</strong> ${c.escalateReason}</div></div></div>` : ''}
   `;
 }
 
@@ -1021,19 +1142,16 @@ function renderSLA(c) {
   const cls = hoursLeft < 1 ? 'sla-breach' : hoursLeft < c.slaHours * 0.25 ? 'sla-warn' : 'sla-ok';
   const hh = Math.floor(hoursLeft);
   const mm = Math.floor((hoursLeft - hh) * 60);
-
   document.getElementById('slaDetail').innerHTML = `
-    <div class="sla-countdown ${cls}" id="slaTimer">${hh}h ${mm}m remaining</div>
+    <div class="sla-countdown ${cls}">${hh}h ${mm}m remaining</div>
     <div class="d-row"><span class="d-label">SLA Type</span><span class="d-value">${c.slaHours}h (Severity ${c.severity})</span></div>
     <div class="d-row"><span class="d-label">Received</span><span class="d-value">${formatTime(c.receivedAt)}</span></div>
     <div class="d-row"><span class="d-label">Deadline</span><span class="d-value">${deadline.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}</span></div>
     <div style="margin-top:8px">
       <div class="d-label" style="margin-bottom:5px">SLA Progress</div>
-      <div class="progress-track">
-        <div class="progress-fill" style="width:${Math.min(100,(1-hoursLeft/c.slaHours)*100).toFixed(0)}%;background:${cls==='sla-ok'?'var(--green)':cls==='sla-warn'?'var(--amber)':'var(--red)'}"></div>
-      </div>
+      <div class="progress-track"><div class="progress-fill" style="width:${Math.min(100,(1-hoursLeft/c.slaHours)*100).toFixed(0)}%;background:${cls==='sla-ok'?'var(--green)':cls==='sla-warn'?'var(--amber)':'var(--red)'}"></div></div>
     </div>
-    <div style="margin-top:8px;padding:8px;background:var(--bg);border-radius:8px;font-size:11px;color:var(--text-muted)">
+    <div style="margin-top:8px;padding:8px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;font-size:11px;color:var(--text-muted)">
       <strong>Auto-escalation:</strong> Fires at 75% time elapsed. RBI: 30-day final resolution required.
     </div>
   `;
@@ -1041,13 +1159,19 @@ function renderSLA(c) {
 
 function renderDraft(c) {
   document.getElementById('draftDetail').innerHTML = `
-    <div style="font-size:11px;color:var(--text-faint);margin-bottom:8px">Generated in ~1.4s · Temperature: 0.1 · Agent review required</div>
+    <div style="font-size:11px;color:var(--text-faint);margin-bottom:8px">Generated in ~1.4s &nbsp;·&nbsp; Temperature: 0.1 &nbsp;·&nbsp; Agent review required</div>
     <div class="draft-box">${c.draft}</div>
     <div class="draft-actions">
-      <button class="btn-approve" onclick="toast('✓ Response approved and queued for sending','success')">✓ Approve</button>
-      <button class="btn-edit" onclick="toast('Opening draft editor...','')">✎ Edit</button>
+      <button class="btn-approve" onclick="toast('Response approved and queued for sending','success')">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Approve
+      </button>
+      <button class="btn-edit" onclick="toast('Opening draft editor...','')">
+        <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Edit
+      </button>
     </div>
-    <div style="margin-top:8px;font-size:10px;color:var(--text-faint)">⚠ All [PENDING] tokens require human verification before sending</div>
+    <div style="margin-top:8px;font-size:10px;color:var(--text-faint)">All [PENDING] tokens require human verification before sending</div>
   `;
 }
 
@@ -1056,22 +1180,21 @@ function renderSimilar(c) {
     const cls = s.score > 0.85 ? 'sim-high' : 'sim-mid';
     return `<div class="sim-item">
       <div>
-        <div style="font-weight:600;color:var(--navy);font-size:12px">${s.id}</div>
+        <div style="font-weight:700;color:var(--navy);font-size:12px">${s.id}</div>
         <div style="font-size:11px;color:var(--text-muted)">${s.issue}</div>
       </div>
       <span class="sim-score ${cls}">${(s.score*100).toFixed(0)}%</span>
     </div>`;
   }).join('');
-
   document.getElementById('similarDetail').innerHTML = `
-    <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">Vector cosine similarity · Threshold: 0.85 = duplicate flag</div>
+    <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">Vector cosine similarity &nbsp;·&nbsp; Threshold: 0.85 = duplicate flag</div>
     ${items}
-    ${c.isDuplicate ? `<div style="margin-top:8px;padding:8px;background:var(--red-light);border-radius:8px;font-size:11px;color:var(--red);font-weight:600">⚠ This complaint is flagged as duplicate — linked to parent ${c.similar[0]?.id}</div>` : ''}
-    ${c.clusterId ? `<div style="margin-top:6px;padding:8px;background:var(--amber-light);border-radius:8px;font-size:11px;color:var(--amber)">📍 Cluster: ${c.clusterId} — 9 related complaints grouped</div>` : ''}
+    ${c.isDuplicate ? `<div style="margin-top:8px;padding:8px;background:var(--red-light);border-radius:8px;font-size:11px;color:var(--red);font-weight:600">This complaint is flagged as duplicate — linked to parent ${c.similar[0]?.id}</div>` : ''}
+    ${c.clusterId ? `<div style="margin-top:6px;padding:8px;background:var(--amber-light);border-radius:8px;font-size:11px;color:var(--amber)">Cluster: ${c.clusterId} — 9 related complaints grouped</div>` : ''}
   `;
 }
 
-// ─── ANALYTICS ────────────────────────────────────────────────────────────────
+// ─── ANALYTICS ───────────────────────────────────────────────────────────────
 function getCatCounts() {
   const counts = {};
   CATEGORIES.forEach(c => counts[c] = 0);
@@ -1083,7 +1206,7 @@ function renderCategoryChart(counts) {
   const el = document.getElementById('categoryChart');
   const data = Object.entries(counts).sort((a,b)=>b[1]-a[1]).filter(([,v])=>v>0);
   const max = Math.max(...data.map(([,v])=>v), 1);
-  const colors = ['#0891B2','#7C3AED','#059669','#D97706','#DC2626','#0D9488','#4F46E5','#B45309'];
+  const colors = ['#0EA5E9','#8B5CF6','#10B981','#F59E0B','#EF4444','#0D9488','#4F46E5','#B45309'];
   el.innerHTML = data.map(([cat, cnt], i) => `
     <div class="cat-bar-row">
       <span class="cat-name">${cat}</span>
@@ -1098,7 +1221,7 @@ function updateCategoryChart() { renderCategoryChart(getCatCounts()); }
 function initDonut() {
   const canvas = document.getElementById('donut');
   donutCtx = canvas.getContext('2d');
-  drawDonut(donutCtx, [1], ['#E2E8F0']);
+  drawDonut(donutCtx, [1], ['#DDE4EE']);
 }
 
 function drawDonut(ctx, values, colors) {
@@ -1108,36 +1231,31 @@ function drawDonut(ctx, values, colors) {
   let angle = -Math.PI/2;
   values.forEach((v,i)=>{
     const slice = (v/total)*Math.PI*2;
-    ctx.beginPath();
-    ctx.moveTo(cx,cy);
-    ctx.arc(cx,cy,r,angle,angle+slice);
-    ctx.closePath();
-    ctx.fillStyle=colors[i];
-    ctx.fill();
+    ctx.beginPath(); ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,angle,angle+slice); ctx.closePath();
+    ctx.fillStyle=colors[i]; ctx.fill();
     angle+=slice;
   });
-  ctx.beginPath();
-  ctx.arc(cx,cy,ir,0,Math.PI*2);
-  ctx.fillStyle='#fff';
-  ctx.fill();
+  ctx.beginPath(); ctx.arc(cx,cy,ir,0,Math.PI*2);
+  ctx.fillStyle='#fff'; ctx.fill();
 }
 
 function updateDonut() {
   if (!processedComplaints.length) return;
   const counts = {Angry:0,Frustrated:0,Dissatisfied:0,Neutral:0};
   processedComplaints.forEach(c => counts[c.sentimentLabel]=(counts[c.sentimentLabel]||0)+1);
-  const vals = [counts.Angry,counts.Frustrated,counts.Dissatisfied,counts.Neutral].filter(v=>v>0);
   const cls = [counts.Angry,counts.Frustrated,counts.Dissatisfied,counts.Neutral];
-  const colors = ['#DC2626','#D97706','#2563EB','#059669'];
+  const colors = ['#EF4444','#F59E0B','#3B82F6','#10B981'];
+  const vals = cls.filter(v=>v>0);
   const activeColors = colors.filter((_,i)=>cls[i]>0);
   drawDonut(donutCtx, vals, activeColors);
   const avg = (processedComplaints.reduce((a,c)=>a+c.sentiment,0)/processedComplaints.length).toFixed(2);
   document.getElementById('donutPct').textContent = avg;
-  const labels = [['Angry',counts.Angry,'#DC2626'],['Frustrated',counts.Frustrated,'#D97706'],['Dissatisfied',counts.Dissatisfied,'#2563EB'],['Neutral',counts.Neutral,'#059669']];
+  const labels = [['Angry',counts.Angry,'#EF4444'],['Frustrated',counts.Frustrated,'#F59E0B'],['Dissatisfied',counts.Dissatisfied,'#3B82F6'],['Neutral',counts.Neutral,'#10B981']];
   document.getElementById('sentimentLegend').innerHTML = labels.filter(([,v])=>v>0).map(([l,v,c])=>`
-    <div style="display:flex;align-items:center;justify-content:space-between;font-size:11px;margin-bottom:4px">
+    <div style="display:flex;align-items:center;justify-content:space-between;font-size:11px;margin-bottom:5px">
       <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:2px;background:${c};display:inline-block"></span>${l}</span>
-      <span style="font-weight:600;color:var(--text)">${v}</span>
+      <span style="font-weight:700;color:var(--text)">${v}</span>
     </div>
   `).join('');
 }
@@ -1156,24 +1274,22 @@ function drawChannelChart(counts) {
   const data = CHANNELS.map((ch,i)=>({label:ch,val:counts[ch]||0,color:CHANNEL_COLORS[i]}));
   const max = Math.max(...data.map(d=>d.val),1);
   const barW = 36, gap = (W-pad*2-barW*5)/4;
-  ctx.font='10px DM Sans,sans-serif';
-  ctx.fillStyle='#94A3B8';
   data.forEach((d,i)=>{
     const x=pad+i*(barW+gap);
     const bh=Math.max(2,(d.val/max)*(H-pad*2));
     const y=H-pad-bh;
     ctx.fillStyle=d.color;
-    ctx.fillRect(x,y,barW,bh);
-    // Label
-    ctx.fillStyle='#64748B';
-    ctx.font='9px DM Sans,sans-serif';
+    // Rounded top
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(x,y,barW,bh,3) : ctx.rect(x,y,barW,bh);
+    ctx.fill();
+    ctx.fillStyle='#8FA3BB';
+    ctx.font='9px Plus Jakarta Sans,sans-serif';
     ctx.textAlign='center';
-    const shortLabel = d.label.split('/')[0].slice(0,7);
-    ctx.fillText(shortLabel,x+barW/2,H-6);
-    // Value
+    ctx.fillText(d.label.split('/')[0].slice(0,7),x+barW/2,H-6);
     if(d.val>0){
-      ctx.fillStyle='#0F172A';
-      ctx.font='bold 10px DM Mono,monospace';
+      ctx.fillStyle='#0A1628';
+      ctx.font='bold 10px IBM Plex Mono,monospace';
       ctx.fillText(d.val,x+barW/2,y-4);
     }
   });
@@ -1199,7 +1315,7 @@ function renderRBIPanel() {
   ];
   document.getElementById('rbiPanel').innerHTML = items.map(item=>`
     <div class="rbi-row">
-      <span class="rbi-check">✓</span>
+      <div class="rbi-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
       <div><div class="rbi-req">${item.req}</div><div class="rbi-how">${item.how}</div></div>
     </div>
   `).join('');
@@ -1210,7 +1326,6 @@ function renderRootCause() {
   const sorted = Object.entries(catCounts).sort((a,b)=>b[1]-a[1]);
   const top = sorted[0];
   const upiCount = processedComplaints.filter(c=>c.clusterId).length;
-
   document.getElementById('rootCausePanel').innerHTML = `
     <div class="rc-label">AI-generated insight · Batch analysis</div>
     <div class="rc-box">The majority of complaints (${top[1]} cases) involve <strong>${top[0]}</strong> issues. ${upiCount} UPI-related complaints are clustered together, suggesting a potential payment gateway or NPCI settlement issue during low-traffic hours (2AM–4AM). Recommend immediate incident investigation of UPI batch processing pipeline.</div>
@@ -1224,14 +1339,12 @@ function renderRootCause() {
         </div>
       `).join('')}
     </div>
-    <div style="margin-top:10px;font-size:10px;color:var(--text-faint)">⚠ AI-suggested pattern. Requires human validation before action.</div>
+    <div style="margin-top:10px;font-size:10px;color:var(--text-faint)">AI-suggested pattern. Requires human validation before action.</div>
   `;
 }
 
 // ─── ACTIVITY FEED ────────────────────────────────────────────────────────────
-function clearActivityFeed() {
-  document.getElementById('activityFeed').innerHTML = '';
-}
+function clearActivityFeed() { document.getElementById('activityFeed').innerHTML = ''; }
 
 function addFeedItem(c) {
   const feed = document.getElementById('activityFeed');
@@ -1247,37 +1360,43 @@ function addFeedItem(c) {
     <div class="feed-time">${new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit',second:'2-digit'})}</div>
   `;
   feed.insertBefore(item, feed.firstChild);
-  // Keep max 40 items
   while (feed.children.length > 40) feed.removeChild(feed.lastChild);
 }
 
 // ─── RESET ────────────────────────────────────────────────────────────────────
 function resetSim() {
   if (simRunning) return;
-  complaints = [];
-  processedComplaints = [];
-  selectedId = null;
+  complaints = []; processedComplaints = []; selectedId = null;
   document.getElementById('complaintList').innerHTML = '';
   document.getElementById('inboxCount').textContent = '0 complaints';
   document.getElementById('progressWrap').classList.remove('visible');
   document.getElementById('pipelineStatus').textContent = 'Idle — click Run to start';
-  document.getElementById('simBtn').disabled = false;
-  document.getElementById('simBtn').innerHTML = '<span>▶</span> Run 50 Complaints';
-  document.getElementById('simBtn').style.background = '';
+  const btn = document.getElementById('simBtn');
+  btn.disabled = false;
+  btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg> Run 50 Complaints`;
+  btn.style.background = '';
   setStats(0,0,0,0,0,0);
-  renderPipeline();
-  renderCategoryChart({});
-  initDonut();
-  initChannelChart();
+  renderPipeline(); renderCategoryChart({}); initDonut(); initChannelChart();
   document.getElementById('activityFeed').innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-faint);font-size:12px">Activity will appear here during simulation</div>';
-  document.getElementById('rootCausePanel').innerHTML = '<div class="detail-empty"><div class="de-icon">🧠</div><p>Runs after processing completes</p></div>';
-  document.getElementById('rbiPanel').innerHTML = '<div class="detail-empty"><div class="de-icon">⚖️</div><p>Compliance data appears after simulation</p></div>';
+  const emptyIcon = (svg) => `<div class="de-icon-wrap">${svg}</div>`;
+  document.getElementById('rootCausePanel').innerHTML = `<div class="detail-empty">${emptyIcon('<svg viewBox="0 0 24 24" fill="none" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>')}<p>Runs after processing completes</p></div>`;
+  document.getElementById('rbiPanel').innerHTML = `<div class="detail-empty">${emptyIcon('<svg viewBox="0 0 24 24" fill="none" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>')}<p>Compliance data appears after simulation</p></div>`;
   ['detail360','slaDetail','draftDetail','similarDetail'].forEach(id => {
-    const labels = {detail360:'📋',slaDetail:'⏱',draftDetail:'🤖',similarDetail:'🔗'};
-    const msgs = {detail360:'Select a complaint from the inbox to see full details',slaDetail:'Select a complaint',draftDetail:'Select a complaint to view AI-generated draft',similarDetail:'Select a complaint'};
-    document.getElementById(id).innerHTML = `<div class="detail-empty"><div class="de-icon">${labels[id]}</div><p>${msgs[id]}</p></div>`;
+    const svgs = {
+      detail360:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+      slaDetail:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+      draftDetail:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+      similarDetail:'<line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/>'
+    };
+    const msgs = {
+      detail360:'Select a complaint from the inbox to see full details',
+      slaDetail:'Select a complaint',
+      draftDetail:'Select a complaint to view AI-generated draft',
+      similarDetail:'Select a complaint'
+    };
+    document.getElementById(id).innerHTML = `<div class="detail-empty"><div class="de-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">${svgs[id]}</svg></div><p>${msgs[id]}</p></div>`;
   });
-  document.querySelectorAll('.p-step').forEach(el => {el.classList.remove('active','done')});
+  document.querySelectorAll('.p-step').forEach(el => { el.classList.remove('active','done'); });
 }
 
 // ─── TOAST ────────────────────────────────────────────────────────────────────
@@ -1287,19 +1406,12 @@ function toast(msg, type) {
   el.className = 'toast ' + (type||'');
   el.textContent = msg;
   wrap.appendChild(el);
-  setTimeout(()=>{
-    el.classList.add('out');
-    setTimeout(()=>el.remove(), 350);
-  }, 3500);
+  setTimeout(()=>{ el.classList.add('out'); setTimeout(()=>el.remove(), 350); }, 3500);
 }
 
-// ─── UTILS ────────────────────────────────────────────────────────────────────
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-function formatTime(d) {
-  return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-}
+function formatTime(d) { return d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
 
-// ─── BOOT ─────────────────────────────────────────────────────────────────────
 init();
 </script>
 </body>
